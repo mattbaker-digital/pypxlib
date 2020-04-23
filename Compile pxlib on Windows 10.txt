@@ -1,0 +1,50 @@
+Install MSYS2 MinGW and update packages as per install guide
+Run MinGW64
+pacman -S --needed base-devel mingw-w64-i686-gcc mingw-w64-x86_64-gcc
+
+
+https://github.com/orlp/dev-on-windows/wiki/Installing-GCC--&-MSYS2
+https://airs.com/ian/configure/configure_5.html
+https://www.gnu.org/software/make/manual/html_node/Standard-Targets.html
+https://www.gnu.org/software/autoconf/manual/autoconf-2.65/html_node/Specifying-Target-Triplets.html
+https://blogs.gnome.org/jjardon/2010/01/25/modernize-your-autotools-build-system/
+https://www.gnu.org/software/libtool/manual/libtool.html#LT_005fINIT
+https://stackoverflow.com/a/22884787
+https://www.linuxquestions.org/questions/slackware-14/explaining-build-host-target-509739/
+https://github.com/Alexpux/mingw-w64/blob/master/mingw-w64-doc/howto-build/mingw-w64-howto-build-adv.txt
+
+
+Ubuntu VM hosted on Windows
+
+For windows:
+Update package repositories to latest
+sudo apt-get update
+
+Install required build tools
+sudo apt-get gcc-mingw-w64 intltool make
+
+Build Windows 64-bit DLL
+./configure --build x86_64-pc-linux-gnu --host x86_64-w64-mingw32 -CFLAGS="-O3 -s"
+export DESTDIR="$(pwd)/build" && make install-strip LDFLAGS="-no-undefined"
+
+./configure -CFLAGS="-O3 -s" -LDFLAGS="-Wno-undef" --build x86_64-pc-linux-gnu --host x86_64-w64-mingw32
+
+
+
+./configure --build x86_64-w64-linux-gnu --host i686-w64-mingw32
+
+./configure --build x86_64-w64-linux-gnu --host x86_64-w64-mingw32 ## doesn't work
+
+make LDFLAGS="-no-undefined"
+
+export DESTDIR="$(pwd)/build" && make install-strip LDFLAGS="-no-undefined -s"
+
+
+If using windows mounted directory will probably need sudo
+
+Native:
+sudo apt-get update
+sudo apt install build-essential
+./configure --build x86_64-w64-linux-gnu --host x86_64-w64-linux-gnu
+
+libtool required if running autogen.sh
