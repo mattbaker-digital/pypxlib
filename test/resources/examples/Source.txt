@@ -1,0 +1,1 @@
+https://github.com/teverett/paradoxReader/tree/master/src/test/resources/examples
